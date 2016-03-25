@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity
     // IDs of all the numeric buttons
     private int[] numericButtons = {R.id.buttonOne, R.id.buttonTwo, R.id.buttonThree, R.id.buttonFour, R.id.buttonFive, R.id.buttonSix, R.id.buttonSeven, R.id.buttonEight, R.id.buttonNine, R.id.buttonZero}; // The other numeric buttons will be added later
     // IDs of all the operator buttons
-    private int[] operatorButtons = {R.id.buttonPlus, R.id.buttonMinus};
+    private int[] operatorButtons = {R.id.buttonPlus, R.id.buttonMinus, R.id.buttonTimes, R.id.buttonDivide};
     // The ID of the "=" button
     private int equalButton = R.id.buttonEqual;
     // TextView used to display the output
@@ -125,6 +125,18 @@ public class MainActivity extends AppCompatActivity
                 {
                     // We substract the second value
                     result -= operandValues[1];
+                }
+                // Else if it was "*"
+                else if (lastOperator.equals("*"))
+                {
+                    // We multiply by the second value
+                    result *= operandValues[1];
+                }
+                // Else if it was "/"
+                else if (lastOperator.equals("/"))
+                {
+                    // We divide by the second value
+                    result /= operandValues[1];
                 }
                 // Show the result on the screen
                 updateScreenTextView(result);
