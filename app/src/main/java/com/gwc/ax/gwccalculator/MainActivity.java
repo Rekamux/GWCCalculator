@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity
 {
     // IDs of all the numeric buttons
-    private int[] numericButtons = {R.id.buttonOne, R.id.buttonTwo}; // The other numeric buttons will be added later
+    private int[] numericButtons = {R.id.buttonOne, R.id.buttonTwo, R.id.buttonThree, R.id.buttonFour, R.id.buttonFive, R.id.buttonSix, R.id.buttonSeven, R.id.buttonEight, R.id.buttonNine, R.id.buttonZero}; // The other numeric buttons will be added later
     // IDs of all the operator buttons
     private int[] operatorButtons = {}; // They will be added later
     // TextView used to display the output
