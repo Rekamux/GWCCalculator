@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity
             // Gather the text shown by the button
             String text = button.getText().toString();
             // Extract the numeric value of that text and store it in the numeric button value
-            numericButtonValue = Integer.valueOf(text);
+            numericButtonValue = numericButtonValue * 10 + Integer.valueOf(text);
             // Show it on the screen
-            screenTextView.setText(text);
+            screenTextView.setText(Integer.toString(numericButtonValue));
         }
     }
 
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity
             screenValue = screenValue + numericButtonValue;
             // Show the result on the screen
             updateScreenTextView();
+            // Reset the numeric button value to 0
+            numericButtonValue = 0;
         }
     }
 }
