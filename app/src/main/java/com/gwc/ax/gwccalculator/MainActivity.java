@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity
     private int operandIndex;
     // Whether we have started populating the operand
     private boolean hasPopulatedOperand;
+    // Whether the operand is negative
+    private boolean isNegative;
 
     // Show the screenValue in the screenTextView
     private void updateScreenTextView(int screenValue)
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity
         hasPopulatedOperand = false;
         // We'll start by filling the first operand
         operandIndex = 0;
+        // By default the operand isn't negative
+        isNegative = false;
 
         // All the numeric buttons use the NumericButtonListener listener
         NumericButtonListener numericButtonListener = new NumericButtonListener();
@@ -84,8 +88,18 @@ public class MainActivity extends AppCompatActivity
             String text = button.getText().toString();
             // Gather the int value of the button
             int value = Integer.valueOf(text);
-            // Math: when you add a digit at the right of an integer, you multiply it by 10 and add that digit
-            operandValues[operandIndex] = operandValues[operandIndex] * 10 + value;
+            // If the operand is positive
+            if (!isNegative)
+            {
+                // Math: when you add a digit at the right of an integer, you multiply it by 10 and add that digit
+                operandValues[operandIndex] = operandValues[operandIndex] * 10 + value;
+            }
+            // Else if it's negative
+            else
+            {
+                // Math: when you add a digit at the right of anegative integer, you multiply it by 10 and substract that digit
+                operandValues[operandIndex] = operandValues[operandIndex] * 10 - value;
+            }
             // Show the result on the screen
             updateScreenTextView(operandValues[operandIndex]);
         }
@@ -118,6 +132,8 @@ public class MainActivity extends AppCompatActivity
                 operandIndex = 0;
                 // We are done populating operands for now
                 hasPopulatedOperand = false;
+                // Back to assuming the number will be positive
+                isNegative = false;
             }
         }
     }
@@ -127,17 +143,38 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
+            // We know that the View that has been clicked on is actually a Button
+            Button button = (Button) v;
+            // Gather the text shown by the button
+            String operator = button.getText().toString();
             // This click only works if we have populated the first number
             if (hasPopulatedOperand && operandIndex == 0)
             {
-                // We know that the View that has been clicked on is actually a Button
-                Button button = (Button) v;
-                // Gather the text shown by the button and store it in the lastOperator
-                lastOperator = button.getText().toString();
+                // Store the operator in the lastOperator
+                lastOperator = operator;
                 // We select the second operand
                 operandIndex = 1;
                 // We have not populated it yet
                 hasPopulatedOperand = false;
+                // Back to assuming it's positive
+                isNegative = false;
+            }
+            // If we have no input and the - operator, it's a change of sign
+            else if (!hasPopulatedOperand && operator.equals("-"))
+            {
+                // Invert the sign
+                isNegative = !isNegative;
+                // If we are negative
+                if (isNegative)
+                {
+                    // Show the minus sign on the screen
+                    screenTextView.setText("-");
+                }
+                else
+                {
+                    // Remove the minus sign and show 0
+                    screenTextView.setText("0");
+                }
             }
         }
     }
