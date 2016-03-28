@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
     // TextView used to display the output
     private TextView screenTextView;
     // The value of the two operand
-    private int operandValues[] = {0, 0};
+    private float operandValues[] = {0, 0};
     // The last pressed operator
     private String lastOperator = "+";
     // Which operand is being filled
@@ -29,9 +29,16 @@ public class MainActivity extends AppCompatActivity
     private boolean isNegative;
 
     // Show the screenValue in the screenTextView
-    private void updateScreenTextView(int screenValue)
+    private void updateScreenTextView(float screenValue)
     {
-        screenTextView.setText(Integer.toString(screenValue));
+        if ((float)((int)(screenValue)) == screenValue)
+        {
+            screenTextView.setText(Integer.toString((int)screenValue));
+        }
+        else
+        {
+            screenTextView.setText(Float.toString(screenValue));
+        }
     }
 
     @Override
@@ -86,19 +93,19 @@ public class MainActivity extends AppCompatActivity
             Button button = (Button) v;
             // Gather the text shown by the button
             String text = button.getText().toString();
-            // Gather the int value of the button
-            int value = Integer.valueOf(text);
+            // Gather the float value of the button
+            float value = Float.valueOf(text);
             // If the operand is positive
             if (!isNegative)
             {
                 // Math: when you add a digit at the right of an integer, you multiply it by 10 and add that digit
-                operandValues[operandIndex] = operandValues[operandIndex] * 10 + value;
+                operandValues[operandIndex] = operandValues[operandIndex] * (float)10 + value;
             }
             // Else if it's negative
             else
             {
                 // Math: when you add a digit at the right of anegative integer, you multiply it by 10 and substract that digit
-                operandValues[operandIndex] = operandValues[operandIndex] * 10 - value;
+                operandValues[operandIndex] = operandValues[operandIndex] * (float)10 - value;
             }
             // Show the result on the screen
             updateScreenTextView(operandValues[operandIndex]);
@@ -113,7 +120,7 @@ public class MainActivity extends AppCompatActivity
             // It only works if we have populated the second operand
             if (hasPopulatedOperand && operandIndex == 1)
             {
-                int result = operandValues[0];
+                float result = operandValues[0];
                 // If the last operator was +
                 if (lastOperator.equals("+"))
                 {
